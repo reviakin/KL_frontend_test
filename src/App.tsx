@@ -1,26 +1,77 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { FC, useEffect, useState } from "react";
 
-function App() {
+import { HighlightedText } from "./HighlightedText";
+import { RepositoryFavorites, isFirstStrContainSecondSrt } from "./tools";
+
+type Option = {
+  id: string;
+  text: string;
+};
+
+const App: FC<{ options: Option[] }> = ({ options }) => {
+  const [favoritesIDs, setFavoritesIDs] = useState(RepositoryFavorites.get);
+  const [search, setSearch] = useState("");
+
+  useEffect(() => RepositoryFavorites.set(favoritesIDs), [favoritesIDs.length]);
+
+  // o(n) on all options filtration
+  const { popularOptions, favoriteOptions } = options.reduce(
+    (acc, option) =>
+      isFirstStrContainSecondSrt(option.text, search)
+        ? favoritesIDs.includes(option.id)
+          ? {
+              ...acc,
+              favoriteOptions: [...acc.favoriteOptions, option],
+            }
+          : {
+              ...acc,
+              popularOptions: [...acc.popularOptions, option],
+            }
+        : acc,
+    { popularOptions: [], favoriteOptions: [] } as {
+      popularOptions: Option[];
+      favoriteOptions: Option[];
+    }
+  );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <input
+        placeholder="Search"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+      <ul>
+        {!popularOptions.length && !favoriteOptions.length && (
+          <h2>Not Found</h2>
+        )}
+        {!!favoriteOptions.length && <h2>Favorites</h2>}
+        {favoriteOptions.map(({ id, text }) => (
+          <li key={id}>
+            <button
+              onClick={() =>
+                setFavoritesIDs(
+                  favoritesIDs.filter((favoritesID) => favoritesID !== id)
+                )
+              }
+            >
+              Remove
+            </button>
+            {search ? <HighlightedText text={text} target={search} /> : text}
+          </li>
+        ))}
+        {!!popularOptions.length && <h2>Popular</h2>}
+        {popularOptions.map(({ id, text }) => (
+          <li key={id}>
+            <button onClick={() => setFavoritesIDs([id, ...favoritesIDs])}>
+              Like
+            </button>
+            {search ? <HighlightedText text={text} target={search} /> : text}
+          </li>
+        ))}
+      </ul>
     </div>
   );
-}
+};
 
-export default App;
+export { App };
