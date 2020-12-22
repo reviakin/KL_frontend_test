@@ -23,5 +23,5 @@ npm start / yarn start
 https://codepen.io/reviakin/pen/ExgwYXr?editors=1010
 
 ### SOLUTION
-https://codepen.io/reviakin/pen/bGezKqM
-https://github.com/reviakin/react_test
+- https://codepen.io/reviakin/pen/bGezKqM
+- https://github.com/reviakin/react_test
