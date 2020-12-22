@@ -14,7 +14,7 @@
 ```bash
 git clone git@github.com:reviakin/react_test.git
 cd react_test
-git checkout -b init
+git checkout remotes/origin/init
 npm i / yarn 
 npm start / yarn start
 ```
