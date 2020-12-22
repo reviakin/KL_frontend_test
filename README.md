@@ -7,3 +7,14 @@
   - при вводе в поле поиска, отобразить опции имена которых включают значения поиска.
     значение поиска выделены в тексте имени (font-style: italic)
   - добавить типы (typescript interfaces types)
+  
+## Начало работы
+Для запуска проекта на локальном компьютере, выполните команды:
+
+```bash
+git@github.com:reviakin/react_test.git
+cd react_test
+git checkout -b init
+npm i / yarn 
+npm start / yarn start
+```
