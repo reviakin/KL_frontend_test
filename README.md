@@ -1,4 +1,4 @@
-# For keniglabs frontend
+# react-test
 
 ## Task
 
