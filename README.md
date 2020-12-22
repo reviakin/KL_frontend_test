@@ -12,7 +12,7 @@
 Для запуска проекта на локальном компьютере, выполните команды:
 
 ```bash
-git@github.com:reviakin/react_test.git
+git clone git@github.com:reviakin/react_test.git
 cd react_test
 git checkout -b init
 npm i / yarn 
